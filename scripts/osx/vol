@@ -1,0 +1,16 @@
+#!/bin/sh
+current_vol=$(osascript -e 'output volume of (get volume settings)')
+up_vol=$((current_vol + 10))
+down_vol=$((current_vol - 10))
+
+if [ $# == 0 ]; then
+	echo $current_vol $up_vol $down_vol
+else
+	case $1 in 
+	up) osascript -e "set volume output volume $up_vol" && echo "current volume $up_vol" ;;
+	down) osascript -e "set volume output volume $down_vol" echo "current volume $down_vol" ;;
+	mute) osascript -e "set volume output muted true" ;;
+	unmute) osascript -e "set volume output muted false" && echo "current volume $current_vol" ;;
+	*) osascript -e "set volume output volume $1" && echo "current volume $1";;
+	esac
+fi

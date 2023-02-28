@@ -1,0 +1,14 @@
+- name: Update homebrew
+  homebrew:
+    name: git
+    state: latest
+    update_homebrew: true
+  tags:
+  - brew
+
+- name: Install homebrew packages
+  homebrew:
+    name: '{{ homebrew_packages }}'
+    state: latest
+  tags:
+  - brew
