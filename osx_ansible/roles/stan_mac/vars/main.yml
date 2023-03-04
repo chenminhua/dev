@@ -1,2 +1,41 @@
 homebrew_packages:
+- azure-cli
+- coreutils
+- exiftool
+- ffmpeg
+- git-delta
+- jq
+- mycli
+- openssl
+- pandoc
+- parallel
+- pgcli
+- postgresql
+- python
+- qpdf
+- node
+- nvm
 - thefuck
+- rsync
+- sd
+- shellcheck
+- sqlite
+- the_silver_searcher
+- tmux
+- tree
+- wget
+- zlib
+- zsh-completions
+
+
+homebrew_cask_packages:
+- alfred
+- anki
+- calibre
+- docker
+- iterm2
+- java
+- karabiner-elements
+- skim
+- vagrant
+- vlc

@@ -1,0 +1,6 @@
+- name: iTerm custom settings file
+  osx_defaults:
+    domain: com.googlecode.iterm2
+    key: PrefsCustomFolder
+    type: string
+    value: "{{ ansible_env.PWD }}/roles/stan_mac/files"

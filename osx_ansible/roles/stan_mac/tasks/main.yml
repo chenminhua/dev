@@ -1,5 +1,8 @@
-- name: Basic settings
-  import_tasks: basic_settings.yml
+# - name: Basic settings
+#   import_tasks: basic_settings.yml
 
-- name: Install things
-  import_tasks: installs.yml
+# - name: Install things
+#   import_tasks: installs.yml
+
+- name: Copy in/clone app settings
+  import_tasks: app_settings.yml

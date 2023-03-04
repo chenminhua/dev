@@ -1,0 +1,12 @@
+services:
+  pg:
+    image: "postgres:13.10"
+    volumes:
+      - ./my-postgres.conf:/etc/postgresql/postgresql.conf
+    ports:
+      - 5432:5432
+    # https://hub.docker.com/_/postgres
+    environment:
+      - POSTGRES_USER=stan
+      - POSTGRES_PASSWORD=1234qwer
+      - POSTGRES_DB=test
