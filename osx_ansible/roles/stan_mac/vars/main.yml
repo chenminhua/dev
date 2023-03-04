@@ -23,6 +23,7 @@ homebrew_packages:
 - the_silver_searcher
 - tmux
 - tree
+- watch
 - wget
 - zlib
 - zsh-completions
