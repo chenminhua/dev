@@ -1,0 +1,54 @@
+- name: var initial
+  set_fact:
+    postgres_major_version: "{{ postgres_version.split('.')[0] }}"
+
+- name: ensure /home/{{ user }}/postgres exists
+  file:
+    path: "/home/{{ user }}/postgres"
+    state: directory
+
+- name: generate .env
+  template:
+    dest: "/home/{{ user }}/postgres/.env"
+    src: .env.j2
+
+- name: generate docker-compose.yml
+  template:
+    dest: "/home/{{ user }}/postgres/docker-compose.yml"
+    src: docker-compose.yml.j2
+
+- include_tasks: conf.yml
+
+- name: start docker containers
+  shell: docker-compose up -d
+  args:
+    chdir: "/home/{{ user }}/postgres/"
+  when: "setup is defined"
+
+- name: ensure(wait for) postgres starts
+  wait_for:
+    port: 5432
+    timeout: 300
+  when: "setup is defined"
+
+- name: wait for unix domain socket start
+  shell: ./postgres.sh shell "psql -c 'select 42'"
+  args:
+    chdir: "/home/{{ user }}/postgres/"
+  register: result
+  until: result.stdout.find("42") != -1
+  retries: 18 # retry for 180s(3 minutes)
+  delay: 10
+  when: "setup is defined"
+
+- name: restart pg
+  shell: "./postgres.sh restart -f"
+  args:
+    chdir: "/home/{{ user }}/postgres/"
+  when: "setup is not defined and restart is defined"
+
+- name: reload pg
+  shell: "./postgres.sh reload"
+  args:
+    chdir: "/home/{{ user }}/postgres/"
+  when: "setup is not defined and restart is not defined"

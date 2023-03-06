@@ -1,0 +1,94 @@
+# Database size & age
+pg_database:
+  query: "SELECT pg_database.datname,
+                 pg_database_size(pg_database.datname) as size,
+                 age(datfrozenxid) as age,
+                 datfrozenxid::text::FLOAT as datfrozenxid
+            FROM pg_database;"
+  metrics:
+    - datname:
+        usage: "LABEL"
+        description: "Name of the database"
+    - size:
+        usage: "GAUGE"
+        description: "Disk space used by the database"
+    - age:
+        usage: "GAUGE"
+        description: "Age of that database: age(datfrozenxid)"
+    - datfrozenxid:
+        usage: "GAUGE"
+        description: "All xid before this is frozen"
+
+# Database statistics: xact, blocks, tuples, conflicts
+# DEFAULT METRICS
+pg_stat_database:
+  query: "SELECT datname, numbackends,
+                 xact_commit, xact_rollback, xact_commit + xact_rollback AS xact_total,
+                 blks_read, blks_hit, blks_read + blks_hit AS blks_total,
+                 tup_returned, tup_fetched, tup_inserted, tup_updated, tup_deleted, tup_inserted + tup_updated + tup_deleted AS tup_modified,
+                 conflicts, temp_files, temp_bytes, deadlocks, blk_read_time, blk_write_time, stats_reset
+            FROM pg_stat_database;"
+  metrics:
+    - datname:
+        usage: "LABEL"
+        description: "Name of the database"
+    - numbackends:
+        usage: "GAUGE"
+        description: "Number of backends currently connected to this database"
+    - xact_commit:
+        usage: "COUNTER"
+        description: "Number of transactions in this database that have been committed"
+    - xact_rollback:
+        usage: "COUNTER"
+        description: "Number of transactions in this database that have been rolled back"
+    - xact_total:
+        usage: "COUNTER"
+        description: "Number of transactions in this database that occurs (xact_commit + xact_rollback)"
+    - blks_read:
+        usage: "COUNTER"
+        description: "Number of disk blocks read from disk in this database"
+    - blks_hit:
+        usage: "COUNTER"
+        description: "Number of times disk blocks were found already in PostgreSQL buffer cache"
+    - blks_total:
+        usage: "COUNTER"
+        description: "Number of blocks been accessed (blks_read + blks_hit)"
+    - tup_returned:
+        usage: "COUNTER"
+        description: "Number of rows returned by queries in this database"
+    - tup_fetched:
+        usage: "COUNTER"
+        description: "Number of rows fetched by queries in this database"
+    - tup_inserted:
+        usage: "COUNTER"
+        description: "Number of rows inserted by queries in this database"
+    - tup_updated:
+        usage: "COUNTER"
+        description: "Number of rows updated by queries in this database"
+    - tup_deleted:
+        usage: "COUNTER"
+        description: "Number of rows deleted by queries in this database"
+    - tup_modified:
+        usage: "COUNTER"
+        description: "Number of rows modified(insert,update,delete) by queries in this database"
+    - conflicts:
+        usage: "COUNTER"
+        description: "Number of queries canceled due to conflicts with recovery in this database. (slave only)"
+    - temp_files:
+        usage: "COUNTER"
+        description: "Number of temporary files created by queries in this database"
+    - temp_bytes:
+        usage: "COUNTER"
+        description: "Temporary file byte count"
+    - deadlocks:
+        usage: "COUNTER"
+        description: "Number of deadlocks detected in this database"
+    - blk_read_time:
+        usage: "COUNTER"
+        description: "Time spent reading data file blocks by backends in this database, in milliseconds"
+    - blk_write_time:
+        usage: "COUNTER"
+        description: "Time spent writing data file blocks by backends in this database, in milliseconds"
+    - stats_reset:
+        usage: "COUNTER"
+        description: "Time at which these statistics were last reset"

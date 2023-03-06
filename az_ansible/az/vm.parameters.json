@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "projectName":{
+            "value": "ansible"
+          },
+        "adminUsername": {
+            "value": "stan"
+        },
+        "adminPublicKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDmucMsPRhPJ7R2hjdoIWpWJow66XedPLJR6NU8fBjgjZgVjGg2cqs8Lc15geSUFGzucZ9tRwurmB1GlLS8VqeSzlpnllx6o8D2awdcnabp1TfLQYyoW/naBQieaRsU3BCIOPrMMSGeJhcsJyUULI5pfAzoAn902/078t2B6Iu0NZsRcyFX95CkFaeZAEWFJRi8xPHuIom4xnPFRKRvxAXCA8mrbGw0eRzkHzLgmZW/IEiEbaf97WCrW3H+xGpVCI+2Famy+BmjH0fknUytDcGMFVhmTD86saltxcN+ch4pjnXrGIyvZcTwyCY/CKJaYVgH13J3EJVxvX8lugz7fZciwK5t/mvnvPLD725C2YKPqRMmV+h78dkicvvADPf4Fu7UiIDz01kiYGqXldC+e/GMX1/BqX5AIjc3LSU0nDsuoFbPjnnRjMekIqLXhZzBzkgfzHScs76wkzrvcQVC+zV9eNCmnExZIplvPm4vOP85YWvDoCnmdH0bMW1oG4GiQxU= chenminhua@chenminhuadeMacBook-Pro.local"
+        }
+    }
+}

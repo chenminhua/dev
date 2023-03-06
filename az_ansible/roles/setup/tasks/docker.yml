@@ -1,0 +1,44 @@
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: install docker
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+    install_recommends: no
+    cache_valid_time: 300
+
+- name: install docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"
+    dest: "{{ docker_compose_path }}"
+    mode: 0755
+
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: add {{ user }} to docker group
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+
+- name: reset ssh connection to allow user changes to affect 'current login user'
+  meta: reset_connection
+
+- name: restart docker
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+  when: restart is defined

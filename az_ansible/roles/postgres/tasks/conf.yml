@@ -1,0 +1,14 @@
+- name: copy postgres configurations
+  synchronize:
+    src: "{{ item }}"
+    dest: "/home/{{ user }}/postgres/"
+  loop:
+    - etc
+    - postgres.sh
+    - docker-entrypoint-initdb.d
+
+- name: copy postgresql.conf
+  copy:
+    src: "postgresql.conf"
+    dest: "/home/{{ user }}/postgres/etc/postgresql/postgresql.conf"
+

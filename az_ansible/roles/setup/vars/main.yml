@@ -1,0 +1,37 @@
+common_packages:
+  - atop
+  - htop
+  - curl
+  - wget
+  - vim
+  - make
+  - git-core
+  - python
+  - tmux
+  - telnet
+  - sysstat
+  - ioping
+  - iperf
+  - sysbench
+  - fio
+  - iotop
+  - smartmontools
+
+ubuntu_packages:
+  - apt-transport-https
+  - software-properties-common
+  - bridge-utils
+  - build-essential
+  - ca-certificates
+  - openssh-server
+  - openssl
+  - tcpd
+  - bzip2
+  - netcat
+  - gnupg
+  - linux-tools-generic
+
+docker_version: "20.10.6"
+containerd_version: "1.6.19"
+docker_compose_version: "2.15.1"
+docker_compose_path: /usr/local/bin/docker-compose

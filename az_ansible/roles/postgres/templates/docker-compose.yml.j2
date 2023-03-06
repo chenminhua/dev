@@ -1,0 +1,37 @@
+version: '3.6'
+
+volumes:
+  data:
+  logs:
+
+services:
+  pg:
+    image: postgres:{{ postgres_version }}
+    restart: unless-stopped
+    pid: "host"
+    network_mode: host
+    volumes:
+      - data:/var/lib/postgresql/data
+      - logs:/var/log/postgresql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./scripts:/home/postgres/scripts
+      - ./etc/postgresql:/etc/postgresql/
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_HOST_AUTH_METHOD
+      - PGUSER
+      - PGPASSWORD
+      - PGDATABASE
+      - POSTGRES_INITDB_ARGS="-k"
+    shm_size: "16gb"
+  
+  exporter:
+    image: wrouesnel/postgres_exporter:v0.4.7
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./etc/postgres_exporter.yml:/etc/postgres_exporter.yml
+    environment:
+      - DATA_SOURCE_NAME=postgresql://${PGUSER}:${PGPASSWORD}@localhost:5432/${PGDATABASE}?sslmode=disable
+      - PG_EXPORTER_EXTEND_QUERY_PATH=/etc/postgres_exporter.yml
+      - PG_EXPORTER_DISABLE_DEFAULT_METRICS=true

@@ -1,0 +1,7 @@
+postgres_user: stan
+postgres_passwd: stanpassw0rd
+postgres_db: test
+postgres_version: 13.9-bullseye
+pglogical_replication_set: repset
+pglogical_replication_user: replicator
+pglogical_replication_passwd: letsreplicate
